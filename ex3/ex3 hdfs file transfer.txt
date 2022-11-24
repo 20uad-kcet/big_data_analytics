@@ -1,0 +1,31 @@
+sudo su - hadoop
+
+start-all.sh
+
+mkdir kcet
+
+cd kcet
+
+cat >kcet_hdfs.txt   (enter something then close using ctrl+d)
+
+ls
+
+hadoop fs -mkdir hdfs://localhost:9000/kcet1  ( folder created in hadoop file system )
+
+hadoop fs -ls hdfs://localhost:9000/     (check)
+
+hadoop fs -put kcet_hdfs.txt hdfs://localhost:9000/kcet1 (transfer file)
+
+
+hadoop fs -ls hdfs://localhost:9000/kcet1 (check)
+
+hadoop fs -cat hdfs://localhost:9000/kcet1/kcet_hdfs.txt (check)
+
+hadoop fs -touchz hdfs://localhost:9000/kcet1/file.txt  (empty file create hadoop file system )
+
+hadoop fs -ls hdfs://localhost:9000/kcet1/file.txt (check)
+
+(move file from HDFS location to local)
+hadoop fs -get hdfs://localhost:9000/kcet1/file.txt /home/hadoop/kcet
+
+ls -l   (check)

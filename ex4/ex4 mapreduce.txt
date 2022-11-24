@@ -1,0 +1,8 @@
+http://www.hadoopadmin.co.in/hdfs/hadoop-cluster-benchmarking-and-stress-testing/
+
+start-all.sh
+jps
+Inside the path /hadoop-3.2.3/share/hadoop/mapreduce
+hadoop jar '/home/hadoop/hadoop-3.2.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.3.jar' TestDFSIO -write -nrFiles 10 -fileSize 50
+hadoop jar /home/hadoop/hadoop-3.2.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.2.3-tests.jar TestDFSIO -read -nrFiles 10 -fileSize 500
+cat TestDFSIO_results.log

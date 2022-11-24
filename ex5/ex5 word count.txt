@@ -1,0 +1,22 @@
+hadoop version
+javac -version
+export HADOOP_CLASSPATH=$(hadoop classpath)
+echo $HADOOP_CLASSPATH
+hadoop fs -mkdir /wordCountTutorial
+start-all.sh
+
+hadoop fs -mkdir hdfs://localhost:9000/wordCountTutorial
+hadoop fs -mkdir hdfs://localhost:9000/wordCountTutorial/input
+hadoop fs -put '/home/hadoop/input_data/input.txt' /wordCountTutorial/input
+ls
+javac -classpath ${HADOOP_CLASSPATH} -d '/home/hadoop/tutorial_classes' '/home/hadoop/WordCount.java' 
+jar -cvf firstTutorial.jar -C tutorial_classes/ .
+hadoop jar '/home/hadoop/firstTutorial.jar' WordCount /wordCountTutorial/input /wordCountTutorial/output
+hadoop dfs -cat /wordCountTutorial/output/*
+hadoop fs -cat hdfs://localhost:9000/wordCountTutorial/output/*
+hadoop fs -cat hdfs://localhost:9000/wordCountTutorial/output
+hadoop dfs -cat /wordCountTutorial/output/*
+hadoop hdfs -cat /wordCountTutorial/output/*
+hadoop dfs -ls /wordCountTutorial/output/*
+hadoop dfs -cat /wordCountTutorial/output/_SUCCESS
+hadoop dfs -cat /wordCountTutorial/output/part-r-00000

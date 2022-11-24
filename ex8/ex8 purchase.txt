@@ -1,0 +1,23 @@
+hadoop version
+javac -version
+export HADOOP_CLASSPATH=$(hadoop classpath)
+echo $HADOOP_CLASSPATH
+hadoop fs -mkdir /purchase
+start-all.sh
+
+hadoop fs -mkdir hdfs://localhost:9000/purchase
+hadoop fs -mkdir hdfs://localhost:9000/purchase/input
+hadoop fs -put '/home/hadoop/Desktop/purchase/input_data/superstore.csv' /puchase/input
+ls
+javac -classpath ${HADOOP_CLASSPATH} -d '/home/hadoop/Desktop/purchase/purchase_classes' '/home/hadoop/Desktop/purchase/StateRegionWiseTotalSalesPrice.java' 
+jar -cvf purchase.jar -C purchase_classes/ .
+hadoop jar '/home/hadoop/Desktop/purchase/purchase.jar' StateRegionWiseTotalSalesPrice /purchase/input /purchase/output  
+
+hadoop dfs -cat /purchase/output/*
+hadoop fs -cat hdfs://localhost:9000/purchase/output/*
+hadoop fs -cat hdfs://localhost:9000/purchase/output
+hadoop dfs -cat /purchase/output/*
+hadoop hdfs -cat /purchase/output/*
+hadoop dfs -ls /purchase/output/*
+hadoop dfs -cat /purchase/output/_SUCCESS
+hadoop dfs -cat /purchase/output/part-r-00000

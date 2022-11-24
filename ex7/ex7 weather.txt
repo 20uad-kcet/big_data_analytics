@@ -1,0 +1,20 @@
+hadoop version
+javac -version
+export HADOOP_CLASSPATH=$(hadoop classpath)
+echo $HADOOP_CLASSPATH
+start-all.sh
+hadoop fs -mkdir hdfs://localhost:9000/weather
+hadoop fs -mkdir hdfs://localhost:9000/weather/input
+hadoop fs -put '/home/hadoop/weather/input_data/weather.txt' /weather/input
+ls
+javac -classpath ${HADOOP_CLASSPATH} -d '/home/hadoop/weather/classfiles' '/home/hadoop/weather/MyMaxMin.java' 
+jar -cvf firstTutorial.jar -C classfiles/ .
+hadoop jar '/home/hadoop/firstTutorial.jar' MyMaxMin /weather/input /weather/output
+hadoop dfs -cat /weather/output/*
+hadoop fs -cat hdfs://localhost:9000/weather/output/*
+hadoop fs -cat hdfs://localhost:9000/weather/output
+hadoop dfs -cat /weather/output/*
+hadoop hdfs -cat /weather/output/*
+hadoop dfs -ls /weather/output/*
+hadoop dfs -cat /weather/output/_SUCCESS
+hadoop dfs -cat /weather/output/part-r-00000
